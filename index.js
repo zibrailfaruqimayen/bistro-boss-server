@@ -141,6 +141,13 @@ async function run() {
       res.send(result);
     });
 
+    // input menu item data to Data Base
+    app.post("/menu", verifyJWT, verifyAdmin, async (req, res) => {
+      const newItem = req.body;
+      const result = await menuCollection.insertOne(newItem);
+      res.send(result);
+    });
+
     // all reviews apis
     app.get("/reviews", async (req, res) => {
       const result = await reviewsCollection.find().toArray();
