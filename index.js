@@ -148,6 +148,14 @@ async function run() {
       res.send(result);
     });
 
+    // admin delete item from menu
+    app.delete("/menu/:id", verifyJWT, verifyAdmin, async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const result = await menuCollection.deleteOne(query);
+      res.send(result);
+    });
+
     // all reviews apis
     app.get("/reviews", async (req, res) => {
       const result = await reviewsCollection.find().toArray();
@@ -179,7 +187,7 @@ async function run() {
       res.send(result);
     });
 
-    // delete data from cart
+    // user delete data from cart
     app.delete("/carts/:id", async (req, res) => {
       const id = req.params.id;
       const query = { _id: new ObjectId(id) };
